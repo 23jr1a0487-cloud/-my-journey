@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GATE 2027 | My Journey</title>
+<meta name="description" content="Personal GATE 2027 ECE preparation dashboard">
+<style>
+:root{--bg:#f5f7fb;--panel:#fff;--text:#172033;--muted:#6b7280;--primary:#5b5bd6;--primary2:#7c3aed;--border:#e6e8ef;--good:#159570;--warn:#d97706;--bad:#dc4545;--shadow:0 10px 30px rgba(31,41,55,.07)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--text);background:var(--bg)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{display:flex;min-height:100vh}.sidebar{width:255px;background:#111827;color:#e5e7eb;padding:22px 14px;position:fixed;inset:0 auto 0 0;z-index:5}.brand{font-weight:800;font-size:20px;padding:10px 12px 25px}.brand small{display:block;font-size:11px;color:#9ca3af;margin-top:4px;font-weight:500}.nav button{display:flex;width:100%;gap:11px;align-items:center;padding:11px 12px;margin:3px 0;border-radius:10px;background:transparent;color:#cbd5e1;text-align:left}.nav button:hover,.nav button.active{background:#252d3d;color:#fff}.main{margin-left:255px;width:calc(100% - 255px);padding:26px;max-width:1600px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.top h1{margin:0;font-size:28px}.top p{margin:5px 0;color:var(--muted)}.clock{font-weight:700}.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,1fr)}.two{grid-template-columns:1.25fr .75fr}.three{grid-template-columns:repeat(3,1fr)}.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow)}.stat .label{color:var(--muted);font-size:13px}.stat .value{font-size:27px;font-weight:800;margin:6px 0}.pill{display:inline-flex;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:700;background:#eef0ff;color:#4f46a5}.progress{height:9px;background:#eceef4;border-radius:20px;overflow:hidden}.progress>span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--primary2));border-radius:20px}.section{display:none}.section.active{display:block}.section-title{display:flex;justify-content:space-between;align-items:center;margin:24px 0 13px}.section-title h2{margin:0;font-size:20px}.btn{background:var(--primary);color:#fff;padding:9px 13px;border-radius:9px;font-weight:700}.btn.secondary{background:#eef0ff;color:#4f46a5}.btn.danger{background:#fee2e2;color:#b91c1c}.btn.small{padding:7px 9px;font-size:12px}.subject{display:flex;justify-content:space-between;align-items:center}.subject h3{margin:0 0 4px;font-size:15px}.muted{color:var(--muted);font-size:13px}.list{display:grid;gap:10px}.item{padding:13px;border:1px solid var(--border);border-radius:12px;background:#fff}.row{display:flex;gap:10px;align-items:center;justify-content:space-between}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse}.table th,.table td{padding:11px;border-bottom:1px solid var(--border);text-align:left;font-size:13px}.table th{color:var(--muted);font-weight:700}.form{display:grid;gap:10px}.form input,.form select,.form textarea{width:100%;padding:10px 11px;border:1px solid var(--border);border-radius:9px;outline:none;background:#fff}.form textarea{min-height:85px;resize:vertical}.modal{position:fixed;inset:0;background:rgba(17,24,39,.45);display:none;align-items:center;justify-content:center;z-index:20;padding:20px}.modal.show{display:flex}.modalbox{background:#fff;border-radius:16px;padding:20px;width:min(560px,100%);max-height:90vh;overflow:auto}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.modalhead h3{margin:0}.close{background:#f3f4f6;border-radius:8px;padding:7px 10px}.bars{display:flex;gap:8px;align-items:end;height:145px;padding-top:15px}.barwrap{flex:1;text-align:center;font-size:10px;color:var(--muted)}.bar{background:linear-gradient(180deg,var(--primary2),var(--primary));border-radius:6px 6px 2px 2px;min-height:4px}.check{accent-color:var(--primary);transform:scale(1.15)}.tag{font-size:11px;padding:4px 7px;border-radius:6px;background:#f1f5f9}.empty{padding:28px;text-align:center;color:var(--muted)}.hero{background:linear-gradient(135deg,#171a35,#4338a8);color:#fff;border:0}.hero .muted{color:#d5d7e8}.hero .progress{background:rgba(255,255,255,.18)}.hero .progress>span{background:#fff}.count{font-size:34px;font-weight:900;margin:4px 0}.quote{font-size:13px;line-height:1.6;color:#dfe2ff}.mobile-menu{display:none}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}.two,.three{grid-template-columns:1fr}}
+@media(max-width:700px){.sidebar{transform:translateX(-100%);transition:.2s}.sidebar.open{transform:none}.main{margin-left:0;width:100%;padding:16px}.mobile-menu{display:inline-flex;background:#111827;color:#fff;padding:9px;border-radius:9px}.top{gap:10px}.top h1{font-size:21px}.stats{grid-template-columns:1fr 1fr}.card{padding:14px}.count{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand">GATE 2027 <small>ECE • My Journey</small></div>
+  <nav class="nav">
+    <button class="active" data-page="dashboard">🏠 Dashboard</button>
+    <button data-page="subjects">📚 Subjects</button>
+    <button data-page="notes">📓 Notes & PDFs</button>
+    <button data-page="formulas">🧠 Formula Vault</button>
+    <button data-page="pyq">🎯 PYQ Tracker</button>
+    <button data-page="mistakes">❌ Mistake Book</button>
+    <button data-page="revision">🔄 Revision</button>
+    <button data-page="timetable">📅 Timetable</button>
+    <button data-page="mocks">📝 Mock Tests</button>
+    <button data-page="analytics">📈 Analytics</button>
+  </nav>
+  <div style="position:absolute;bottom:18px;left:20px;right:20px;font-size:11px;color:#94a3b8">Your data is stored locally in this browser.</div>
+</aside>
+
+<main class="main">
+<header class="top">
+  <div style="display:flex;align-items:center;gap:10px"><button class="mobile-menu" onclick="toggleSide()">☰</button><div><h1 id="pageTitle">Dashboard</h1><p id="dateText"></p></div></div>
+  <div class="clock" id="clock"></div>
+</header>
+
+<section id="dashboard" class="section active">
+  <div class="grid stats">
+    <div class="card stat"><div class="label">Study streak</div><div class="value" id="streak">0 days</div><span class="pill">Consistency</span></div>
+    <div class="card stat"><div class="label">Syllabus progress</div><div class="value" id="syllabus">0%</div><span class="pill">ECE</span></div>
+    <div class="card stat"><div class="label">PYQs solved</div><div class="value" id="pyqCount">0</div><span class="pill">Practice</span></div>
+    <div class="card stat"><div class="label">Mock average</div><div class="value" id="mockAvg">—</div><span class="pill">Performance</span></div>
+  </div>
+  <div class="grid two" style="margin-top:16px">
+    <div class="card hero">
+      <div class="muted">GATE 2027 countdown</div>
+      <div class="count" id="countdown">—</div>
+      <div class="quote">Learn → Practice → Revise → Analyze → Improve. Your goal is not just to study more; it is to become measurably better every week.</div>
+      <div style="margin-top:18px"><div class="row"><span>Overall preparation</span><b id="heroProgressText">0%</b></div><div class="progress" style="margin-top:7px"><span id="heroProgress" style="width:0%"></span></div></div>
+    </div>
+    <div class="card">
+      <div class="row"><h3 style="margin:0">Today's target</h3><button class="btn small" onclick="openTask()">+ Task</button></div>
+      <div id="todayTasks" class="list" style="margin-top:13px"></div>
+    </div>
+  </div>
+  <div class="grid two" style="margin-top:16px">
+    <div class="card"><div class="section-title" style="margin:0 0 10px"><h2>Subject health</h2><button class="btn secondary small" onclick="go('subjects')">Manage</button></div><div id="subjectHealth" class="list"></div></div>
+    <div class="card"><div class="section-title" style="margin:0 0 10px"><h2>Revision due</h2><button class="btn secondary small" onclick="go('revision')">Open</button></div><div id="revisionDue" class="list"></div></div>
+  </div>
+</section>
+
+<section id="subjects" class="section">
+<div class="section-title"><h2>GATE ECE Subjects</h2><button class="btn" onclick="openSubject()">+ Add Subject</button></div>
+<div id="subjectsList" class="grid three"></div>
+</section>
+
+<section id="notes" class="section">
+<div class="section-title"><h2>Notes, PYQs & PDF Library</h2><button class="btn" onclick="openNote()">+ Add Resource</button></div>
+
+<div class="grid two" style="margin-bottom:16px">
+  <div class="card">
+    <h3 style="margin-top:0">📚 Official GATE PYQ Archive</h3>
+    <p class="muted">Use the official GATE archive for the most reliable question papers. The GATE 2025 organizing institute provides bulk downloads for 2007–2024 and year-wise papers; the 2025 master-paper page provides the 2025 EC paper and official key.</p>
+    <div class="row" style="margin-top:14px">
+      <a class="btn" href="https://gate2025.iitr.ac.in/download.html" target="_blank">2007–2024 Archive</a>
+      <a class="btn secondary" href="https://gate2025.iitr.ac.in/question-papers.html" target="_blank">2025 Papers + Keys</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">🕰️ Older GATE Papers</h3>
+    <p class="muted">For older papers, GATE Overflow's ECE archive includes historical GATE ECE papers and official-key links. Use it as the older-paper index rather than copying third-party PDFs into your site.</p>
+    <a class="btn secondary" href="https://ec.gateoverflow.in/blogs" target="_blank">Open ECE Archive</a>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <div class="section-title" style="margin:0 0 10px">
+    <h2>GATE ECE PYQs — 2025 back to 2007</h2>
+    <span class="pill">Official source</span>
+  </div>
+  <div class="grid three" id="officialYears"></div>
+</div>
+
+<div class="card" style="margin-bottom:16px">
+  <div class="section-title" style="margin:0 0 10px">
+    <h2>Online PYQ + Mock Test Sources</h2>
+    <span class="pill">Practice</span>
+  </div>
+  <div class="grid three" id="mockSources"></div>
+</div>
+
+<div class="card">
+  <p class="muted">Your personal resources</p>
+  <div id="notesList" class="list"></div>
+</div>
+</section>
+
+<section id="formulas" class="section">
+<div class="section-title"><h2>Formula Vault</h2><button class="btn" onclick="openFormula()">+ Add Formula</button></div>
+<div id="formulaList" class="grid two"></div>
+</section>
+
+<section id="pyq" class="section">
+<div class="section-title"><h2>PYQ Tracker</h2><button class="btn" onclick="openPyq()">+ Add PYQ</button></div>
+<div class="card" style="margin-bottom:16px"><div class="row"><div><b>Want the full paper?</b><div class="muted">Open the Notes & PYQ Library for official archives and online mock-test sources.</div></div><button class="btn secondary" onclick="go('notes')">Open PYQ Library</button></div></div>
+<div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Year</th><th>Subject</th><th>Topic</th><th>Result</th><th>Time</th><th>Action</th></tr></thead><tbody id="pyqTable"></tbody></table></div></div>
+</section>
+
+<section id="mistakes" class="section">
+<div class="section-title"><h2>GATE Mistake Book</h2><button class="btn" onclick="openMistake()">+ Add Mistake</button></div>
+<div id="mistakeList" class="list"></div>
+</section>
+
+<section id="revision" class="section">
+<div class="section-title"><h2>Revision Tracker</h2><button class="btn" onclick="openRevision()">+ Schedule Revision</button></div>
+<div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Topic</th><th>Subject</th><th>Stage</th><th>Due</th><th>Status</th><th>Action</th></tr></thead><tbody id="revisionTable"></tbody></table></div></div>
+</section>
+
+<section id="timetable" class="section">
+<div class="section-title"><h2>Timetable</h2><button class="btn" onclick="openSchedule()">+ Add Session</button></div>
+<div class="card"><div id="scheduleList" class="list"></div></div>
+</section>
+
+<section id="mocks" class="section">
+<div class="section-title"><h2>Mock Test Center</h2><button class="btn" onclick="openMock()">+ Add Mock</button></div>
+<div class="grid stats" style="margin-bottom:16px"><div class="card stat"><div class="label">Tests</div><div class="value" id="mockCount">0</div></div><div class="card stat"><div class="label">Average</div><div class="value" id="mockAverage2">—</div></div><div class="card stat"><div class="label">Best</div><div class="value" id="mockBest">—</div></div><div class="card stat"><div class="label">Latest</div><div class="value" id="mockLatest">—</div></div></div>
+<div class="card"><div class="table-wrap"><table class="table"><thead><tr><th>Mock</th><th>Date</th><th>Score</th><th>Accuracy</th><th>Time</th><th>Action</th></tr></thead><tbody id="mockTable"></tbody></table></div></div>
+</section>
+
+<section id="analytics" class="section">
+<div class="section-title"><h2>Progress Analytics</h2></div>
+<div class="grid two">
+<div class="card"><h3>Last 7 days — study hours</h3><div id="hoursChart" class="bars"></div></div>
+<div class="card"><h3>Subject accuracy</h3><div id="accuracyChart" class="list"></div></div>
+</div>
+<div class="card" style="margin-top:16px"><h3>Weekly review</h3><p id="weeklyReview" class="muted"></p></div>
+</section>
+</main>
+</div>
+
+<div class="modal" id="modal"><div class="modalbox"><div class="modalhead"><h3 id="modalTitle">Add</h3><button class="close" onclick="closeModal()">✕</button></div><div id="modalBody"></div></div></div>
+
+<script>
+const SUBJECTS_DEFAULT=[
+["Engineering Mathematics",10],["General Aptitude",10],["Network Theory",10],["Signals & Systems",10],
+["Electronic Devices",10],["Analog Circuits",10],["Digital Circuits",10],["Control Systems",10],
+["Communications",10],["Electromagnetics",10]
+];
+const KEY="gate2027_v1";
+let db=JSON.parse(localStorage.getItem(KEY)||"null")||{
+ subjects:SUBJECTS_DEFAULT.map(x=>({name:x[0],progress:0,accuracy:0,topics:0})),
+ tasks:[], notes:[], formulas:[], pyqs:[], mistakes:[], revisions:[], schedule:[], mocks:[],
+ dailyHours:{}, lastStudy:null, streak:0
+};
+function save(){localStorage.setItem(KEY,JSON.stringify(db));renderAll()}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function today(){return new Date().toISOString().slice(0,10)}
+function go(page){document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));document.getElementById(page).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.page===page));document.getElementById("pageTitle").textContent=page==="notes"?"Notes & PDFs":page[0].toUpperCase()+page.slice(1);document.getElementById("sidebar").classList.remove("open");renderAll()}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>go(b.dataset.page));
+function toggleSide(){document.getElementById("sidebar").classList.toggle("open")}
+function modal(title,body){document.getElementById("modalTitle").textContent=title;document.getElementById("modalBody").innerHTML=body;document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function add(form,fn){const f=new FormData(form);fn(f);closeModal();save()}
+function openTask(){modal("Add today's task",`<form class="form" onsubmit="add(this,f=>db.tasks.push({id:Date.now(),text:f.get('text'),subject:f.get('subject'),done:false,date:today()}))"><input name="text" placeholder="e.g. Solve 25 Fourier Transform PYQs" required><select name="subject">${db.subjects.map(s=>`<option>${esc(s.name)}</option>`).join("")}</select><button class="btn">Add task</button></form>`)}
+function openSubject(){modal("Add subject",`<form class="form" onsubmit="add(this,f=>db.subjects.push({name:f.get('name'),progress:+f.get('progress')||0,accuracy:+f.get('accuracy')||0,topics:0}))"><input name="name" placeholder="Subject name" required><input name="progress" type="number" min="0" max="100" placeholder="Current syllabus %"><input name="accuracy" type="number" min="0" max="100" placeholder="PYQ accuracy %"><button class="btn">Add subject</button></form>`)}
+function openNote(){modal("Add resource",`<form class="form" onsubmit="add(this,f=>db.notes.push({id:Date.now(),title:f.get('title'),type:f.get('type'),subject:f.get('subject'),url:f.get('url'),tag:f.get('tag')}))"><input name="title" placeholder="Resource title" required><select name="type"><option>Notes</option><option>PDF</option><option>Book</option><option>PYQ</option><option>Video</option></select><select name="subject">${db.subjects.map(s=>`<option>${esc(s.name)}</option>`).join("")}</select><input name="url" placeholder="Optional Google Drive / website link"><input name="tag" placeholder="Tag e.g. Fourier, revision"><button class="btn">Save resource</button></form>`)}
+function openFormula(){modal("Add formula",`<form class="form" onsubmit="add(this,f=>db.formulas.push({id:Date.now(),title:f.get('title'),formula:f.get('formula'),subject:f.get('subject'),trap:f.get('trap')}))"><input name="title" placeholder="Formula/topic" required><select name="subject">${db.subjects.map(s=>`<option>${esc(s.name)}</option>`).join("")}</select><textarea name="formula" placeholder="Formula" required></textarea><textarea name="trap" placeholder="Common trap / condition"></textarea><button class="btn">Save formula</button></form>`)}
+function openPyq(){modal("Add PYQ",`<form class="form" onsubmit="add(this,f=>db.pyqs.push({id:Date.now(),year:f.get('year'),subject:f.get('subject'),topic:f.get('topic'),result:f.get('result'),time:f.get('time')}))"><input name="year" type="number" min="1987" max="2027" placeholder="Year" required><select name="subject">${db.subjects.map(s=>`<option>${esc(s.name)}</option>`).join("")}</select><input name="topic" placeholder="Topic" required><select name="result"><option>Correct</option><option>Wrong</option><option>Skipped</option></select><input name="time" placeholder="Time e.g. 3 min"><button class="btn">Add PYQ</button></form>`)}
+function openMistake(){modal("Add mistake",`<form class="form" onsubmit="add(this,f=>db.mistakes.push({id:Date.now(),topic:f.get('topic'),subject:f.get('subject'),type:f.get('type'),lesson:f.get('lesson')}))"><input name="topic" placeholder="Topic / question" required><select name="subject">${db.subjects.map(s=>`<option>${esc(s.name)}</option>`).join("")}</select><select name="type"><option>Conceptual</option><option>Formula</option><option>Calculation</option><option>Silly mistake</option><option>Time management</option><option>Question interpretation</option></select><textarea name="lesson" placeholder="What went wrong and how will you avoid it?"></textarea><button class="btn">Save mistake</button></form>`)}
+function openRevision(){modal("Schedule revision",`<form class="form" onsubmit="add(this,f=>db.revisions.push({id:Date.now(),topic:f.get('topic'),subject:f.get('subject'),stage:f.get('stage'),due:f.get('due'),done:false}))"><input name="topic" placeholder="Topic" required><select name="subject">${db.subjects.map(s=>`<option>${esc(s.name)}</option>`).join("")}</select><select name="stage"><option>Day 1</option><option>Day 7</option><option>Day 30</option><option>Final revision</option></select><input name="due" type="date" value="${today()}" required><button class="btn">Schedule</button></form>`)}
+function openSchedule(){modal("Add study session",`<form class="form" onsubmit="add(this,f=>db.schedule.push({id:Date.now(),date:f.get('date'),time:f.get('time'),subject:f.get('subject'),task:f.get('task'),hours:+f.get('hours')||0}))"><input name="date" type="date" value="${today()}" required><input name="time" placeholder="06:00–08:00" required><select name="subject">${db.subjects.map(s=>`<option>${esc(s.name)}</option>`).join("")}</select><input name="task" placeholder="What will you study?" required><input name="hours" type="number" min="0" step=".25" placeholder="Hours"><button class="btn">Add session</button></form>`)}
+function openMock(){modal("Add mock test",`<form class="form" onsubmit="add(this,f=>db.mocks.push({id:Date.now(),name:f.get('name'),date:f.get('date'),score:+f.get('score'),max:+f.get('max'),accuracy:+f.get('accuracy'),time:f.get('time')}))"><input name="name" placeholder="Mock #1" required><input name="date" type="date" value="${today()}" required><input name="score" type="number" placeholder="Score" required><input name="max" type="number" value="100" placeholder="Maximum marks"><input name="accuracy" type="number" min="0" max="100" placeholder="Accuracy %"><input name="time" placeholder="Time taken"><button class="btn">Save mock</button></form>`)}
+function del(type,id){db[type]=db[type].filter(x=>x.id!==id);save()}
+function toggleTask(id){let t=db.tasks.find(x=>x.id===id);if(t){t.done=!t.done;if(t.done){db.lastStudy=today();db.streak=Math.max(1,db.streak||0)}}save()}
+function markRevision(id){let r=db.revisions.find(x=>x.id===id);if(r){r.done=!r.done}save()}
+function updateSubject(i,field,val){db.subjects[i][field]=Math.max(0,Math.min(100,+val||0));save()}
+function renderDashboard(){
+ const avg=db.subjects.length?Math.round(db.subjects.reduce((a,s)=>a+s.progress,0)/db.subjects.length):0;
+ document.getElementById("syllabus").textContent=avg+"%";document.getElementById("heroProgressText").textContent=avg+"%";document.getElementById("heroProgress").style.width=avg+"%";
+ document.getElementById("pyqCount").textContent=db.pyqs.length;document.getElementById("streak").textContent=(db.streak||0)+" days";
+ let ma=db.mocks.length?Math.round(db.mocks.reduce((a,m)=>a+(m.score/(m.max||100))*100,0)/db.mocks.length):null;document.getElementById("mockAvg").textContent=ma===null?"—":ma+"%";
+ document.getElementById("todayTasks").innerHTML=db.tasks.filter(t=>t.date===today()).map(t=>`<div class="item row"><label><input class="check" type="checkbox" ${t.done?"checked":""} onchange="toggleTask(${t.id})"> <span style="${t.done?'text-decoration:line-through;color:#9ca3af':''}">${esc(t.text)}</span></label><button class="btn danger small" onclick="del('tasks',${t.id})">×</button></div>`).join("")||`<div class="empty">No tasks yet. Add your first target.</div>`;
+ document.getElementById("subjectHealth").innerHTML=db.subjects.slice(0,6).map((s,i)=>`<div><div class="subject"><div><h3>${esc(s.name)}</h3><span class="muted">${s.accuracy||0}% accuracy</span></div><b>${s.progress}%</b></div><div class="progress" style="margin-top:6px"><span style="width:${s.progress}%"></span></div></div>`).join("");
+ let due=db.revisions.filter(r=>!r.done && r.due<=today()).slice(0,5);document.getElementById("revisionDue").innerHTML=due.map(r=>`<div class="item row"><div><b>${esc(r.topic)}</b><div class="muted">${esc(r.subject)} • ${r.stage}</div></div><button class="btn small" onclick="markRevision(${r.id})">Done</button></div>`).join("")||`<div class="empty">No revision due today.</div>`;
+}
+function renderSubjects(){document.getElementById("subjectsList").innerHTML=db.subjects.map((s,i)=>`<div class="card"><div class="subject"><div><h3>${esc(s.name)}</h3><span class="muted">Accuracy ${s.accuracy||0}%</span></div><button class="btn danger small" onclick="del('subjects',${i})">×</button></div><div style="margin:13px 0 7px" class="row"><span class="muted">Syllabus</span><b>${s.progress}%</b></div><input type="range" min="0" max="100" value="${s.progress}" style="width:100%" oninput="updateSubject(${i},'progress',this.value)"><div style="margin:13px 0 7px" class="row"><span class="muted">Accuracy</span><b>${s.accuracy||0}%</b></div><input type="range" min="0" max="100" value="${s.accuracy||0}" style="width:100%" oninput="updateSubject(${i},'accuracy',this.value)"></div>`).join("")}
+function renderNotes(){
+const years=[2025,2024,2023,2022,2021,2020,2019,2018,2017,2016,2015,2014,2013,2012,2011,2010,2009,2008,2007];
+document.getElementById("officialYears").innerHTML=years.map(y=>`<div class="item row"><div><b>GATE EC ${y}</b><div class="muted">Official archive / question-paper index</div></div><a class="btn secondary small" href="https://gate2025.iitr.ac.in/download.html" target="_blank">Open</a></div>`).join("");
+const mocks=[
+["GATE ECE Mock Tests","Testbook","137 tests listed; chapter, subject, full-test and PYQ practice. One free full mock is currently listed.","https://testbook.com/gate-ec/test-series"],
+["GATE ECE PYQ + Online Tests","GATE Overflow ECE","Original ECE papers from recent years can be attempted online, with 65 questions / 100 marks / 3 hours format shown for recent papers.","https://ec.gateoverflow.in/exams/gate"],
+["GATE Mock Test Hub","Testbook — all GATE","GATE mock-test hub with ECE test-series access and other practice categories.","https://testbook.com/gate/mock-test"]
+];
+document.getElementById("mockSources").innerHTML=mocks.map(m=>`<div class="item"><b>${esc(m[0])}</b><div class="muted" style="margin:6px 0">${esc(m[1])}</div><p style="font-size:12px;line-height:1.5">${esc(m[2])}</p><a class="btn secondary small" href="${m[3]}" target="_blank">Open practice</a></div>`).join("");
+document.getElementById("notesList").innerHTML=db.notes.map(n=>`<div class="item row"><div><b>${esc(n.title)}</b><div class="muted">${esc(n.type)} • ${esc(n.subject)} ${n.tag?"• "+esc(n.tag):""}</div></div><div>${n.url?`<a class="btn secondary small" href="${esc(n.url)}" target="_blank">Open</a>`:""} <button class="btn danger small" onclick="del('notes',${n.id})">×</button></div></div>`).join("")||`<div class="empty">Your personal notes and PDF index is empty.</div>`;
+}
+function renderFormulas(){document.getElementById("formulaList").innerHTML=db.formulas.map(f=>`<div class="card"><div class="row"><div><h3 style="margin:0">${esc(f.title)}</h3><span class="tag">${esc(f.subject)}</span></div><button class="btn danger small" onclick="del('formulas',${f.id})">×</button></div><pre style="white-space:pre-wrap;font-family:inherit;background:#f8fafc;padding:12px;border-radius:9px;margin:12px 0">${esc(f.formula)}</pre><div class="muted">${esc(f.trap||"")}</div></div>`).join("")||`<div class="card empty">Add your high-frequency GATE formulas here.</div>`}
+function renderPyq(){document.getElementById("pyqTable").innerHTML=db.pyqs.map(p=>`<tr><td>${p.year}</td><td>${esc(p.subject)}</td><td>${esc(p.topic)}</td><td><span class="pill">${p.result}</span></td><td>${esc(p.time||"—")}</td><td><button class="btn danger small" onclick="del('pyqs',${p.id})">Delete</button></td></tr>`).join("")||`<tr><td colspan="6" class="empty">No PYQs recorded.</td></tr>`}
+function renderMistakes(){document.getElementById("mistakeList").innerHTML=db.mistakes.map(m=>`<div class="item"><div class="row"><div><b>${esc(m.topic)}</b><div class="muted">${esc(m.subject)} • ${esc(m.type)}</div></div><button class="btn danger small" onclick="del('mistakes',${m.id})">Delete</button></div><p style="margin-bottom:0">${esc(m.lesson||"Add the lesson you learned.")}</p></div>`).join("")||`<div class="card empty">Your mistake book is empty. Every mistake should become a future strength.</div>`}
+function renderRevision(){document.getElementById("revisionTable").innerHTML=db.revisions.map(r=>`<tr><td>${esc(r.topic)}</td><td>${esc(r.subject)}</td><td>${r.stage}</td><td>${r.due}</td><td>${r.done?"✅ Done":r.due<=today()?"🔴 Due":"🟡 Planned"}</td><td><button class="btn small" onclick="markRevision(${r.id})">${r.done?"Undo":"Done"}</button> <button class="btn danger small" onclick="del('revisions',${r.id})">×</button></td></tr>`).join("")||`<tr><td colspan="6" class="empty">No revisions scheduled.</td></tr>`}
+function renderSchedule(){document.getElementById("scheduleList").innerHTML=db.schedule.sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).map(s=>`<div class="item row"><div><b>${esc(s.time)} — ${esc(s.subject)}</b><div class="muted">${s.date} • ${esc(s.task)} • ${s.hours||0}h</div></div><button class="btn danger small" onclick="del('schedule',${s.id})">×</button></div>`).join("")||`<div class="empty">Build your study timetable.</div>`}
+function renderMocks(){let arr=db.mocks;let avg=arr.length?Math.round(arr.reduce((a,m)=>a+(m.score/(m.max||100))*100,0)/arr.length):null;document.getElementById("mockCount").textContent=arr.length;document.getElementById("mockAverage2").textContent=avg===null?"—":avg+"%";document.getElementById("mockBest").textContent=arr.length?Math.max(...arr.map(m=>Math.round(m.score/(m.max||100)*100)))+"%":"—";document.getElementById("mockLatest").textContent=arr.length?Math.round(arr[arr.length-1].score/(arr[arr.length-1].max||100)*100)+"%":"—";document.getElementById("mockTable").innerHTML=arr.map(m=>`<tr><td>${esc(m.name)}</td><td>${m.date}</td><td>${m.score}/${m.max||100}</td><td>${m.accuracy||"—"}%</td><td>${esc(m.time||"—")}</td><td><button class="btn danger small" onclick="del('mocks',${m.id})">Delete</button></td></tr>`).join("")||`<tr><td colspan="6" class="empty">No mocks recorded.</td></tr>`}
+function renderAnalytics(){let dates=[];for(let i=6;i>=0;i--){let d=new Date();d.setDate(d.getDate()-i);dates.push(d.toISOString().slice(0,10))}let vals=dates.map(d=>db.dailyHours[d]||0),max=Math.max(1,...vals);document.getElementById("hoursChart").innerHTML=vals.map((v,i)=>`<div class="barwrap"><div class="bar" style="height:${Math.max(5,v/max*110)}px" title="${v} hours"></div><div>${dates[i].slice(5)}</div></div>`).join("");document.getElementById("accuracyChart").innerHTML=db.subjects.map(s=>`<div><div class="row"><span>${esc(s.name)}</span><b>${s.accuracy||0}%</b></div><div class="progress" style="margin-top:5px"><span style="width:${s.accuracy||0}%"></span></div></div>`).join("");let hours=vals.reduce((a,b)=>a+b,0),weak=[...db.subjects].sort((a,b)=>(a.accuracy||0)-(b.accuracy||0)).slice(0,3).map(x=>x.name).join(", ");document.getElementById("weeklyReview").textContent=`You logged ${hours} study hours in the last 7 days. Your current priority should be ${weak||"your weakest topics"}. Review your mistake book after every mock and raise accuracy before chasing speed.`}
+function countdown(){let target=new Date("2027-02-06T09:00:00+05:30"),now=new Date(),ms=target-now;if(ms<0){document.getElementById("countdown").textContent="GATE season is here";return}let d=Math.floor(ms/86400000),h=Math.floor(ms/3600000)%24;document.getElementById("countdown").textContent=`${d} days ${h} hours`}
+function tick(){document.getElementById("clock").textContent=new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});document.getElementById("dateText").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});countdown()}
+function renderAll(){renderDashboard();renderSubjects();renderNotes();renderFormulas();renderPyq();renderMistakes();renderRevision();renderSchedule();renderMocks();renderAnalytics()}
+tick();setInterval(tick,1000);renderAll();
+</script>
+</body>
+</html>
