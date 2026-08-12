@@ -187,6 +187,23 @@ const SUBJECTS_DEFAULT=[
 ];
 
 let db={
+  // ... existing variables like let db = { ... };
+
+// Replace your old save() with this:
+function save() {
+  if (typeof database !== 'undefined') {
+    database.ref('gateTracker').set(db);
+  }
+  renderAll();
+}
+
+// Paste the delete function right below save():
+function deleteItem(collection, id) {
+  if (db[collection]) {
+    db[collection] = db[collection].filter(item => item.id !== id);
+    save();
+  }
+}
  subjects:SUBJECTS_DEFAULT.map(x=>({name:x[0],progress:0,accuracy:0,topics:0})),
  tasks:[], notes:[], formulas:[], pyqs:[], mistakes:[], revisions:[], schedule:[], mocks:[],
  dailyHours:{}, lastStudy:null, streak:0
