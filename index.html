@@ -191,6 +191,182 @@ let db={
   tasks:[], notes:[], formulas:[], pyqs:[], mistakes:[], revisions:[], schedule:[], mocks:[],
   dailyHours:{}, lastStudy:null, streak:0
 };
+  <!-- LOCAL-FIRST / OPTIONAL CLOUD SYNC: localStorage + Export/Import + cloud toggle -->
+<script>
+/* Local/cloud sync helpers and UI controls (insert after `let db = {...}` and before the existing save()) */
+
+function loadLocal() {
+  try {
+    const raw = localStorage.getItem('gateTracker');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Merge parsed into db while preserving missing fields
+      db = Object.assign(db, parsed);
+    }
+  } catch (e) {
+    console.error('Failed to load local data', e);
+  }
+}
+
+function saveLocal() {
+  try {
+    localStorage.setItem('gateTracker', JSON.stringify(db));
+  } catch (e) {
+    console.error('Failed to save local data', e);
+  }
+}
+
+function cloudSyncEnabled() {
+  return localStorage.getItem('gateTracker_cloudSync') === 'true';
+}
+
+function setCloudSync(enabled) {
+  localStorage.setItem('gateTracker_cloudSync', enabled ? 'true' : 'false');
+  updateSyncUI();
+  if (enabled && typeof database !== 'undefined') {
+    try {
+      database.ref('gateTracker').set(db);
+    } catch (e) {
+      console.error('Failed to push local to cloud on enable', e);
+    }
+  }
+}
+
+function updateSyncUI() {
+  const el = document.getElementById('syncStatus');
+  if (!el) return;
+  if (cloudSyncEnabled() && typeof database !== 'undefined') {
+    el.innerHTML = '☁️ Cloud sync: ON';
+  } else {
+    el.innerHTML = '📁 Local only (cloud sync OFF)';
+  }
+}
+
+/* Export & Import */
+function exportData() {
+  const filename = 'gateTracker-backup-' + today() + '.json';
+  const blob = new Blob([JSON.stringify(db, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function importDataFromFile(input) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      db = Object.assign(db, parsed);
+      save();
+      alert('Imported backup successfully.');
+    } catch (err) {
+      alert('Failed to import: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+/* Load local immediately so user data persists */
+loadLocal();
+updateSyncUI();
+
+/* Wrap/override the original save so local is always written first and cloud only if enabled */
+(function overrideSave() {
+  const originalSave = window.save;
+  window.save = function() {
+    try { saveLocal(); } catch(e){ console.error(e); }
+    if (cloudSyncEnabled() && typeof database !== 'undefined') {
+      try {
+        database.ref('gateTracker').set(db);
+      } catch (e) {
+        console.error('Cloud save failed', e);
+      }
+    }
+    // call original save-side effects (render)
+    if (typeof originalSave === 'function') {
+      try { originalSave(); } catch(e){ /* if original save relied on being top-level, ignore */ }
+    } else {
+      // Fallback: ensure UI updates
+      try { renderAll(); } catch(e){ console.error(e); }
+    }
+  };
+})();
+
+/* Adjust realtime listener: only apply remote updates when user opted in */
+if (typeof database !== 'undefined') {
+  if (cloudSyncEnabled()) {
+    database.ref('gateTracker').once('value').then(snapshot=>{
+      const remote = snapshot.val();
+      if (remote && !localStorage.getItem('gateTracker')) {
+        db = Object.assign(db, remote);
+        saveLocal();
+        renderAll();
+      }
+    }).catch(err=>console.error('initial cloud read failed',err));
+
+    database.ref('gateTracker').on('value', (snapshot) => {
+      if (!cloudSyncEnabled()) return;
+      const data = snapshot.val();
+      if (data) {
+        db = Object.assign(db, data);
+        saveLocal();
+        renderAll();
+      }
+    });
+  }
+}
+
+/* Insert small UI controls into the sidebar (replace existing syncStatus placeholder) */
+(function insertSyncControls() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  const container = document.createElement('div');
+  container.style.position = 'absolute';
+  container.style.bottom = '18px';
+  container.style.left = '20px';
+  container.style.right = '20px';
+  container.style.fontSize = '12px';
+  container.style.color = '#94a3b8';
+  container.id = 'syncControlsContainer';
+  container.innerHTML = `
+    <div id="syncStatus" style="margin-bottom:6px">${cloudSyncEnabled() ? '☁️ Cloud sync: ON' : '📁 Local only (cloud sync OFF)'}</div>
+    <label style="display:flex;gap:8px;align-items:center">
+      <input type="checkbox" id="cloudSyncToggle" ${cloudSyncEnabled() ? 'checked' : ''}>
+      <span style="font-size:12px">Enable cloud sync</span>
+    </label>
+    <div style="margin-top:8px;display:flex;gap:8px">
+      <button class="btn small" id="exportBtn" type="button">Export</button>
+      <label class="btn small secondary" style="display:inline-flex;align-items:center;cursor:pointer">
+        Import <input id="importFile" type="file" accept="application/json" style="display:none">
+      </label>
+    </div>
+  `;
+  const existing = document.getElementById('syncStatus');
+  if (existing && existing.parentNode) existing.parentNode.replaceChild(container, existing);
+  else sidebar.appendChild(container);
+
+  const toggle = document.getElementById('cloudSyncToggle');
+  const exportBtn = document.getElementById('exportBtn');
+  const importFile = document.getElementById('importFile');
+
+  toggle.addEventListener('change', () => {
+    setCloudSync(toggle.checked);
+    if (toggle.checked && typeof database !== 'undefined') {
+      try { database.ref('gateTracker').set(db); } catch (e) { console.error(e); }
+    }
+  });
+
+  exportBtn.addEventListener('click', exportData);
+  importFile.addEventListener('change', (ev) => importDataFromFile(ev.target));
+})();
+</script>
 
 // Saves updated db state to Firebase and re-renders UI
 function save(){
